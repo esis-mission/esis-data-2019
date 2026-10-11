@@ -62,8 +62,15 @@ keys_check = ("T_OBS", "WAVELNTH")
 """The keywords checked against the JSOC's record of each file."""
 
 
-def query() -> list[dict[str, str]]:
-    """Ask the JSOC for the keywords and the path of each image."""
+def query(
+    time_start: str = time_start,
+    duration: str = duration,
+    channels: tuple[int, ...] = channels,
+) -> list[dict[str, str]]:
+    """
+    Ask the JSOC for the keywords and the path of each image in the given
+    time slots and channels, by default those of this archive.
+    """
     channel = ",".join(str(c) for c in channels)
     record_set = f"{series}[{time_start}/{duration}][{channel}]"
     keys_query = ("T_REC",) + keys_check
