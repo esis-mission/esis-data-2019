@@ -50,3 +50,22 @@ The XRT images are courtesy of the Hinode team. Hinode is a Japanese mission dev
 The AIA images and the HMI magnetograms are courtesy of NASA/SDO and the AIA and HMI science teams.
 IRIS is a NASA small explorer mission developed and operated by LMSAL with mission operations executed at NASA Ames Research Center and major contributions to downlink communications funded by ESA and the Norwegian Space Centre.
 Please cite [Golub et al. (2007)](https://doi.org/10.1007/s11207-007-0182-1) for XRT, [Lemen et al. (2012)](https://doi.org/10.1007/s11207-011-9776-8) for AIA, [Scherrer et al. (2012)](https://doi.org/10.1007/s11207-011-9834-2) and [Schou et al. (2012)](https://doi.org/10.1007/s11207-011-9842-2) for HMI, and [De Pontieu et al. (2014)](https://doi.org/10.1007/s11207-014-0485-y) for IRIS when you use them.
+
+## Measurements of the optics
+
+The `metrology-v1.0` release holds `esis-2019-metrology.tar`, our own measurements of the optics which flew.
+Each is the final product of a measurement, the file exactly as the software of the instrument saved it; none of the intermediate products it was made from are kept.
+Later releases add measurements, and keep these byte for byte the same.
+
+So far the archive holds `primary/PM_001_Figure_Promoted.h5`, the map of the figure of the primary mirror, serial number SN001:
+
+- We measured it at Montana State University in June 2018, with a 4D Technology PhaseCam 6000 interferometer at the center of curvature of the mirror.
+- The map is the mean of two measurements, with the mirror turned 180° about its axis between them.
+- Piston, tilt, power, and the spherical aberration which a paraboloid shows at its center of curvature were removed.
+- The file is in the HDF5 format of the interferometer's software, 4Sight 2.17. `measurement0/genraw/data` holds the map, in waves of 632.8 nm on pixels 0.1835 mm apart. Its wedge of 0.5 makes it the height of the surface, half the optical path difference which the interferometer measured. Masked pixels hold the largest 32-bit floating-point number.
+
+The `manifest.csv` of each directory lists each file's optic, serial number, date, software, wavelength, wedge, units, pixel size, and SHA-256 checksum.
+
+`tools/build_metrology.py` builds the archive from the laboratory's copies of the files, which it finds by name and checks against their checksums, using `h5py`:
+
+    python tools/build_metrology.py <source> <directory>
