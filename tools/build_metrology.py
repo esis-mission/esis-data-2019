@@ -6,10 +6,10 @@ the software of the instrument wrote it, beside a manifest which records the
 metadata of each file and its SHA-256 checksum. None of the intermediate
 products the final ones were made from are kept.
 
-So far that is the map of the figure of the primary mirror, which we measured
-with a 4D Technology PhaseCam 6000 interferometer at the center of curvature
-of the mirror, and saved with the interferometer's software, 4Sight, in its
-HDF5 format.
+So far those are the map of the figure of the primary mirror and three maps
+of each of the four gratings, which we measured with a 4D Technology PhaseCam
+6000 interferometer at the center of curvature of each optic, and saved with
+the interferometer's software, 4Sight, in its HDF5 format.
 
 Run it as ``python tools/build_metrology.py <source> <directory>``. It finds
 each file listed in :data:`files` under ``<source>`` by its name, checks it
@@ -57,8 +57,98 @@ files = (
         serial="SN001",
         sha256="25b73f3d8c4b4917579c82371529760c4d2e05dee286ace0d700ff405c4abe2b",
     ),
+    Measurement(
+        directory="gratings",
+        name="EUV_014_Confocal_1.h5",
+        optic="grating",
+        serial="89027",
+        sha256="f5afef823d11b7a2f5bb6b91e2896370fb85a5cd9000208b0396ae29561d18d7",
+    ),
+    Measurement(
+        directory="gratings",
+        name="EUV_014_Confocal_2.h5",
+        optic="grating",
+        serial="89027",
+        sha256="d118345d9a4e427e58995ca57a4b56912b8b1a3785af012b8977ffb2d6ec222a",
+    ),
+    Measurement(
+        directory="gratings",
+        name="EUV_014_Confocal_3.h5",
+        optic="grating",
+        serial="89027",
+        sha256="1f416af7c201ab04b8863b1d74b52c85a51339f505f7e76b8b3369bc9d466a07",
+    ),
+    Measurement(
+        directory="gratings",
+        name="EUV_017_Confocal_1.h5",
+        optic="grating",
+        serial="89024",
+        sha256="2de596bc2e14356ec92550151e66bcb3d61a073d6ba85cc123540a65186ca645",
+    ),
+    Measurement(
+        directory="gratings",
+        name="EUV_017_Confocal_2.h5",
+        optic="grating",
+        serial="89024",
+        sha256="aa7b631b46ea56aa36151540a1f32de51281e2a67214d825a94ec47858dd8e80",
+    ),
+    Measurement(
+        directory="gratings",
+        name="EUV_017_Confocal_3.h5",
+        optic="grating",
+        serial="89024",
+        sha256="31d55e3cd3ef2be8a83d5a49b7b57e60b25d2b9bb4bcc477b259d484da4350c7",
+    ),
+    Measurement(
+        directory="gratings",
+        name="EUV_019_Confocal_1.h5",
+        optic="grating",
+        serial="89026",
+        sha256="97a30ddcdf8d03801c5a8c51a6d58ea46835c372309e3791ea9056283356234d",
+    ),
+    Measurement(
+        directory="gratings",
+        name="EUV_019_Confocal_2.h5",
+        optic="grating",
+        serial="89026",
+        sha256="bf504e1e384bbe0d9fac9b717ffd1392d511ea2dad91c222f0781d5c1b8283a5",
+    ),
+    Measurement(
+        directory="gratings",
+        name="EUV_019_Confocal_3.h5",
+        optic="grating",
+        serial="89026",
+        sha256="495015a078352725faa522e68b3c90978ffbc776b2f62c19840ecc9ea0bc7096",
+    ),
+    Measurement(
+        directory="gratings",
+        name="EUV_024_Confocal_1.h5",
+        optic="grating",
+        serial="89025",
+        sha256="dde1bbd52eb3ee67537161e9f3f375dd9d7162238a258b0d0f51ed1c4bc4e452",
+    ),
+    Measurement(
+        directory="gratings",
+        name="EUV_024_Confocal_2.h5",
+        optic="grating",
+        serial="89025",
+        sha256="c1c38f34cc57fb05a110d4ea50a7eeba5b6b5639cc3ae4ab0c1c0298976ac854",
+    ),
+    Measurement(
+        directory="gratings",
+        name="EUV_024_Confocal_3.h5",
+        optic="grating",
+        serial="89025",
+        sha256="bff131d25541de1933c9294eba777c1c0a4d06d88147af015da3f8b617bc577e",
+    ),
 )
-"""The files in the archive."""
+"""
+The files in the archive.
+
+The maps of the gratings are named by the number of the blank each grating
+was made on, UBO-16-014 for the grating with the serial number 89027 and so
+on.
+"""
 
 name_archive = "esis-2019-metrology.tar"
 """The name of the archive."""
@@ -85,7 +175,8 @@ The date is the one 4Sight recorded when it saved the file, in the local time
 of the laboratory. The data of the file is a height in units of
 ``height_units`` of the ``wavelength``, multiplied by the ``wedge``, so a
 wedge of 0.5 makes it the height of the surface, half the difference in the
-optical path it measured. Its pixels are ``xpix`` apart on the surface.
+optical path it measured, and a wedge of 1 leaves it that difference, twice
+the height of the surface. Its pixels are ``xpix`` apart on the surface.
 """
 
 

@@ -53,16 +53,31 @@ Please cite [Golub et al. (2007)](https://doi.org/10.1007/s11207-007-0182-1) for
 
 ## Measurements of the optics
 
-The `metrology-v1.0` release holds `esis-2019-metrology.tar`, our own measurements of the optics which flew.
+The `metrology-v1.*` releases hold `esis-2019-metrology.tar`, our own measurements of the optics which flew.
 Each is the final product of a measurement, the file exactly as the software of the instrument saved it; none of the intermediate products it was made from are kept.
-Later releases add measurements, and keep these byte for byte the same.
+Later releases add measurements, and keep these byte for byte the same: `metrology-v1.0` holds the primary mirror, and `metrology-v1.1` adds the gratings.
 
-So far the archive holds `primary/PM_001_Figure_Promoted.h5`, the map of the figure of the primary mirror, serial number SN001:
+`primary/PM_001_Figure_Promoted.h5` is the map of the figure of the primary mirror, serial number SN001:
 
 - We measured it at Montana State University in June 2018, with a 4D Technology PhaseCam 6000 interferometer at the center of curvature of the mirror.
 - The map is the mean of two measurements, with the mirror turned 180° about its axis between them.
 - Piston, tilt, power, and the spherical aberration which a paraboloid shows at its center of curvature were removed.
 - The file is in the HDF5 format of the interferometer's software, 4Sight 2.17. `measurement0/genraw/data` holds the map, in waves of 632.8 nm on pixels 0.1835 mm apart. Its wedge of 0.5 makes it the height of the surface, half the optical path difference which the interferometer measured. Masked pixels hold the largest 32-bit floating-point number.
+
+`gratings/EUV_<blank>_Confocal_<n>.h5` are three maps of each of the four gratings, named by the number of the blank each was made on:
+
+| blank | serial number |
+|---|---|
+| UBO-16-014 | 89027 |
+| UBO-16-017 | 89024 |
+| UBO-16-019 | 89026 |
+| UBO-16-024 | 89025 |
+
+- We measured them at Montana State University on 6 and 7 June 2018, with the PhaseCam 6000, at the center of curvature of each grating, while we measured their radii of curvature. Each grating was aligned again before each of its three measurements.
+- The files are in the same format, from the same version of 4Sight. `measurement0/genraw/data` holds the map, in waves of 632.8 nm on pixels 0.0376 mm apart. Its wedge of 1 makes it the optical path difference which the interferometer measured, twice the height of the surface. Nothing was removed from it: piston, tilt, and power are as each alignment left them.
+- 4Sight was set to subtract a reference, a measurement of the interferometer's reference sphere, when it analyzed the maps. That reference is saved in `measurement0/analyzed/opts/refdata/data`, the same in every file, with a wedge of 0.5. It has not been subtracted from `genraw`.
+- The maps of UBO-16-017 have no mask: every pixel of the frame holds a height, including the border of the blank and the background beyond it. The others are masked by hand, a little inside the clear aperture of the grating, and their masked pixels hold the largest 32-bit floating-point number.
+- `measurement0/reserve_interferogram/frame1/data` is one frame of the interferogram, in which the clear aperture of the grating is a bright trapezoid.
 
 The `manifest.csv` of each directory lists each file's optic, serial number, date, software, wavelength, wedge, units, pixel size, and SHA-256 checksum.
 
