@@ -84,3 +84,21 @@ The `manifest.csv` of each directory lists each file's optic, serial number, dat
 `tools/build_metrology.py` builds the archive from the laboratory's copies of the files, which it finds by name and checks against their checksums, using `h5py`:
 
     python tools/build_metrology.py <source> <directory>
+
+## SUMER spectra
+
+The `sumer-v1.0` release holds 178 level-1 files of the Solar Ultraviolet Measurements of Emitted Radiation (SUMER) spectrograph on the Solar and Heliospheric Observatory (SOHO), 8.5 GB in all, from 1996 to 2009.
+They are the files of every observation whose rasters of O V 629.7 Å passed our survey of the SOHO archive for the training set of the neural-network inversion of ESIS, kept here so that the training set can be built again if the SOHO archive goes away.
+Which of their rasters the training set uses, and how it cleans them, is left to the code which builds it.
+
+- Each file is a gzipped tar of the FITS files of one observation, exactly as the SOHO archive serves it, under its own name, such as `sum_19960916_160201_l1.tgz`.
+- They are released one by one, not packed into one archive, since together they are larger than GitHub allows a file of a release to be, and so that a user can download only those they need.
+- `manifest.csv` lists the URL in the SOHO archive, size, and SHA-256 checksum of each file, with its observation in ESA's catalogue of SOHO: its start and end, study, science objective, exposure times, position and size of the field, and wavelength range.
+
+`tools/build_sumer.py` builds the release from the SOHO archive, or from copies of its files, which it checks against their checksums and against their sizes in ESA's catalogue:
+
+    python tools/build_sumer.py <directory> [<source>]
+
+The SUMER team has put its data in the public domain, asks that SUMER be acknowledged as their source, and asks to be told of the papers which use them ([SUMER data policy](https://www2.mps.mpg.de/projects/soho/sumer/text/datavail.html)).
+SOHO is a project of international cooperation between ESA and NASA.
+Please cite [Wilhelm et al. (1995)](https://doi.org/10.1007/BF00733430) for SUMER, and the dataset of ESA's SOHO Science Archive, [doi:10.5270/esa-shl1wiw](https://doi.org/10.5270/esa-shl1wiw), when you use them.
